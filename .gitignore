@@ -1,2 +1,5 @@
 /target
 Cargo.lock
+
+.commitignore
+commit_message.md
