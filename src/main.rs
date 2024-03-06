@@ -8,7 +8,7 @@ mod git_related;
 #[path = "my_theme.rs"]
 mod my_theme;
 
-use dialoguer::Select;
+use dialoguer::{Confirm, Select};
 
 const COMMIT_TYPES: [&str; 4] = ["chore", "feat", "fix", "test"];
 
@@ -37,5 +37,14 @@ fn main() {
         format!("{}({}): {}", chosen_branch, scope, commit_message)
     };
 
-    git_related::commit(commit_message, true).unwrap();
+    if Confirm::new()
+        .with_prompt(&format!(
+            "Do you want to commit with the message: {}",
+            commit_message
+        ))
+        .interact()
+        .unwrap()
+    {
+        git_related::commit(commit_message, true).unwrap();
+    }
 }
